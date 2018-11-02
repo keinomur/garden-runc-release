@@ -1,0 +1,7 @@
+---
+name: proxy
+
+dependencies: []
+
+files:
+  - proxy/envoy-6ac936f2750c39a8b4fb232d6ddc4802f4e6aeee.tgz

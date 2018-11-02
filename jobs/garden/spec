@@ -30,6 +30,7 @@ packages:
   - xfs-progs
   - thresholder
   - netplugin-shim
+  - proxy
 
 properties:
   garden.listen_network:
