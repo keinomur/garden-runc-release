@@ -4,3 +4,7 @@ export DATA_DIR=/var/vcap/data/containerd
 export ROOT_DIR=/var/vcap/data/containerd/root
 export PID_FILEPATH="${RUN_DIR}/containerd.pid"
 export CONFIG_FILEPATH="/var/vcap/jobs/containerd/config/containerd.toml"
+
+if [ -d "/run/systemd/system" ]; then
+  export IS_RUNNING_SYSTEMD=true
+fi
