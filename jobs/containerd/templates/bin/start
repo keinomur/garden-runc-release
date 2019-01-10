@@ -4,25 +4,14 @@ set -eu
 # shellcheck disable=SC1091
 source /var/vcap/jobs/containerd/bin/envs
 
-log() {
-  local msg
-  local time
+exec 1>> "${LOG_DIR}/containerd_ctl.log"
+exec 2>> "${LOG_DIR}/containerd_ctl.log"
 
-  msg=$1
-  time=$(date +"%e/%m/%Y - %T")
-
-  echo "$time $msg" >> "${LOG_DIR}/containerd_ctl.log"
-}
-
-export PATH="${PATH}:/var/vcap/packages/containerd/bin"
-export PATH="${PATH}:/var/vcap/packages/runc/bin"
-
-mkdir -p "$RUN_DIR" "$LOG_DIR" "$DATA_DIR" "$ROOT_DIR"
-
-echo $$ > "$PID_FILEPATH"
-
-log "starting containerd"
-
-exec 1>> "${LOG_DIR}/containerd.stdout.log"
-exec 2>> "${LOG_DIR}/containerd.stderr.log"
-exec containerd -c "$CONFIG_FILEPATH"
+if [ -n "${IS_RUNNING_SYSTEMD}" ]; then
+  rm -f /lib/systemd/system/containerd.service
+  cp /var/vcap/jobs/containerd/config/containerd.service /lib/systemd/system/
+  /bin/systemctl daemon-reload
+  /bin/systemctl start containerd.service
+else
+  /var/vcap/jobs/containerd/bin/containerd_start
+fi

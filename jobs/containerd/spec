@@ -2,10 +2,13 @@
 name: containerd
 
 templates:
-  config/containerd.toml: config/containerd.toml
-  bin/start: bin/start
-  bin/stop: bin/stop
-  bin/envs: bin/envs
+  config/containerd.toml:    config/containerd.toml
+  config/containerd.service: config/containerd.service
+  bin/containerd_start:      bin/containerd_start
+  bin/containerd_stop:       bin/containerd_stop
+  bin/start:                 bin/start
+  bin/stop:                  bin/stop
+  bin/envs:                  bin/envs
 
 packages:
 - containerd
