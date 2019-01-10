@@ -11,9 +11,12 @@ templates:
   bin/auplink:                              bin/auplink
   bin/overlay-xfs-setup:                    bin/overlay-xfs-setup
   bin/grootfs-utils.erb:                    bin/grootfs-utils
+  bin/start:                                bin/start
+  bin/stop:                                 bin/stop
   config/grootfs_config.yml.erb:            config/grootfs_config.yml
   config/privileged_grootfs_config.yml.erb: config/privileged_grootfs_config.yml
   config/config.ini.erb:                    config/config.ini
+  config/garden.service:                    config/garden.service
   certs/remote-layer.crt.erb:               certs/remote-layer.crt
   certs/remote-layer.cert.erb:              certs/remote-layer.cert
   certs/remote-layer.key.erb:               certs/remote-layer.key

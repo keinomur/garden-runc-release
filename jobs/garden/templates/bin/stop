@@ -1,0 +1,15 @@
+#!/bin/bash
+
+set -e
+
+# shellcheck disable=SC1091
+source /var/vcap/jobs/garden/bin/envs
+
+exec 1>> "/var/vcap/sys/log/garden/garden_start.stdout.log"
+exec 2>> "/var/vcap/sys/log/garden/garden_start.stderr.log"
+
+if [ -n "${IS_RUNNING_SYSTEMD}" ]; then
+  /bin/systemctl stop garden.service
+else
+  /var/vcap/jobs/garden/bin/garden_stop
+fi
