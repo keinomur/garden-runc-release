@@ -3,6 +3,7 @@ set -e
 
 # shellcheck disable=SC1091
 source /var/vcap/jobs/garden/bin/envs
+source /var/vcap/jobs/garden/bin/containerd_util
 
 function wait_pid() {
   pid=$1
@@ -30,6 +31,7 @@ function stop_guardian() {
   kill -TERM "$pid"
   if wait_pid "$pid" 100 ; then
     rm "$PIDFILE"
+    echo "stopped guardian"
     return 0
   fi
 
@@ -37,6 +39,7 @@ function stop_guardian() {
   kill -QUIT "$pid" || true
   if wait_pid "$pid" 50 ; then
     rm "$PIDFILE"
+    echo "stopped guardian"
     return 0
   fi
 
@@ -44,6 +47,7 @@ function stop_guardian() {
   kill -KILL "$pid" || true
   if wait_pid "$pid" 50 ; then
     rm "$PIDFILE"
+    echo "stopped guardian"
     return 0
   fi
 
@@ -52,3 +56,9 @@ function stop_guardian() {
 }
 
 stop_guardian
+
+<% if p("garden.experimental_containerd_mode") || p("garden.containerd_mode") -%>
+log "containerd stopping"
+stop_containerd
+log "containerd stopped"
+<% end %>

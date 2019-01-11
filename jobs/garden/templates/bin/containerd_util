@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+set -eu
+
+# shellcheck disable=SC1091
+source /var/vcap/jobs/garden/bin/containerd_envs
+
+export PATH="${PATH}:/var/vcap/packages/containerd/bin"
+export PATH="${PATH}:/var/vcap/packages/runc/bin"
+
+# TODO: move to greenskeeper
+mkdir -p "$CONTAINERD_RUN_DIR" "$CONTAINERD_LOG_DIR" "$CONTAINERD_DATA_DIR" "$CONTAINERD_ROOT_DIR"
+
+log() {
+  local msg
+  local time
+
+  msg=$1
+  time=$(date +"%e/%m/%Y - %T")
+
+  echo "$time $msg" >> "${CONTAINERD_LOG_DIR}/containerd_ctl.log"
+}
+
+
+start_containerd() {
+  #TODO: figure out pidfiles
+  log "starting containerd"
+
+  containerd -c "$CONTAINERD_CONFIG_FILEPATH" \
+    1>> "${CONTAINERD_LOG_DIR}/containerd.stdout.log" \
+    2>> "${CONTAINERD_LOG_DIR}/containerd.stderr.log" \
+    &
+}
+
+stop_containerd() {
+  log "stopping containerd"
+  #TODO: figure out pidfiles
+  # kill -9  "$(pidof containerd)"
+  killall -s SIGKILL containerd
+}

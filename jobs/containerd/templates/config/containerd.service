@@ -1,9 +1,0 @@
-[Unit]
-Description=contianerd container runtime
-
-[Service]
-ExecStart=/var/vcap/jobs/containerd/bin/containerd_start
-ExecStop=/var/vcap/jobs/containerd/bin/containerd_stop
-Delegate=yes
-KillMode=none
-DefaultDependencies=no
