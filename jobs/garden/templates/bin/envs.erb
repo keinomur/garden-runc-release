@@ -17,6 +17,7 @@ export PATH="/var/vcap/packages/garden-idmapper/bin:${PATH}"
 export PATH="/var/vcap/jobs/garden/bin:${PATH}"
 export MAXIMUS=$(maximus)
 
+
 if [ -d "/run/systemd/system" ]; then
   export IS_RUNNING_SYSTEMD=true
 fi

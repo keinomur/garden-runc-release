@@ -21,8 +21,7 @@ templates:
   certs/remote-layer.cert.erb:              certs/remote-layer.cert
   certs/remote-layer.key.erb:               certs/remote-layer.key
   config/containerd.toml:                   config/containerd.toml
-  bin/containerd_util:                      bin/containerd_util
-  bin/containerd_envs:                      bin/containerd_envs
+  bin/containerd_utils:                     bin/containerd_utils
 
 packages:
   - guardian

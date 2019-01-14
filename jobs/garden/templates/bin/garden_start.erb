@@ -3,7 +3,6 @@
 set -e
 
 source /var/vcap/jobs/garden/bin/envs
-source /var/vcap/jobs/garden/bin/containerd_util
 source /var/vcap/packages/greenskeeper/bin/system-preparation
 
 log "running greenskeeper"
@@ -46,15 +45,16 @@ ${BASE_PATH}/overlay-xfs-setup
 log "configuring xfs: done"
 <% end %>
 
-exec 1> >( tee -a $LOG_DIR/garden.stdout.log | logger -p user.info -t vcap.garden ) \
-     2> >( tee -a $LOG_DIR/garden.stderr.log | logger -p user.error -t vcap.garden )
+<% if p("garden.experimental_containerd_mode") || p("garden.containerd_mode") -%>
+source /var/vcap/jobs/garden/bin/containerd_utils
 
-<% if p("garden.containerd_mode") -%>
 log "containerd starting"
 start_containerd
 log "containerd started"
 <% end %>
 
+exec 1> >( tee -a $LOG_DIR/garden.stdout.log | logger -p user.info -t vcap.garden ) \
+     2> >( tee -a $LOG_DIR/garden.stderr.log | logger -p user.error -t vcap.garden )
 
 setup_cmd="/var/vcap/packages/guardian/bin/gdn setup"
 exec_command="exec"

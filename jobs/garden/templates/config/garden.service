@@ -6,4 +6,3 @@ ExecStart=/var/vcap/jobs/garden/bin/garden_start
 ExecStop=/var/vcap/jobs/garden/bin/garden_stop
 Delegate=yes
 KillMode=none
-DefaultDependencies=no

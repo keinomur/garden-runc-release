@@ -3,7 +3,7 @@ set -e
 
 # shellcheck disable=SC1091
 source /var/vcap/jobs/garden/bin/envs
-source /var/vcap/jobs/garden/bin/containerd_util
+source /var/vcap/jobs/garden/bin/containerd_utils
 
 function wait_pid() {
   pid=$1
