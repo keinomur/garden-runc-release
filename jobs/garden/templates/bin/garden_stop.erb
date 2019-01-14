@@ -5,6 +5,11 @@ set -e
 source /var/vcap/jobs/garden/bin/envs
 source /var/vcap/jobs/garden/bin/containerd_utils
 
+<% if !p("bpm.enabled") %>
+  exec 1>> "${LOG_DIR}/garden_ctl.stdout.log"
+  exec 2>> "${LOG_DIR}/garden_ctl.stderr.log"
+<% end %>
+
 function wait_pid() {
   pid=$1
   shift

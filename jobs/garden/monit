@@ -8,8 +8,8 @@ check process garden
 <% else %>
 check process garden
   with pidfile /var/vcap/sys/run/garden/garden.pid
-  start program "/var/vcap/jobs/garden/bin/start" with timeout 120 seconds
-  stop program "/var/vcap/jobs/garden/bin/stop"
+  start program "/var/vcap/jobs/garden/bin/garden_ctl start" with timeout 120 seconds
+  stop program "/var/vcap/jobs/garden/bin/garden_ctl stop"
 
 <% if p("garden.listen_network") == "unix" %>
   if failed unixsocket <%= p("garden.listen_address") %>
